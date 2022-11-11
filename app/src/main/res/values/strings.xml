@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GreenCommunity</string>
+    <string name="button_addAd">Add new Ad</string>
+    <string name="hint_adTitle">Title</string>
+    <string name="hint_adDescription">Description</string>
+    <string name="button_explore">Explore Ads in your Area</string>
+    <string name="hint_adPrice">Price</string>
+</resources>
