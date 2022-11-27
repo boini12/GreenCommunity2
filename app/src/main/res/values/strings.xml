@@ -5,4 +5,6 @@
     <string name="hint_adDescription">Description</string>
     <string name="button_explore">Explore Ads in your Area</string>
     <string name="hint_adPrice">Price</string>
+    <string name="menu_cancelAd">Cancel</string>
+    <string name="menu_addAd">Add</string>
 </resources>

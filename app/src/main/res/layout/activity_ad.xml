@@ -61,7 +61,7 @@
                     android:layout_margin="8dp"
                     android:autofillHints="hint"
                     android:hint="@string/hint_adDescription"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:maxLength="100"
                     android:maxLines="3"
                     android:padding="8dp"
