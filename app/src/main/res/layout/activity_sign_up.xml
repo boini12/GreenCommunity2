@@ -1,0 +1,65 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SignUpActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="357dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="72dp"
+        android:text="Sign-Up"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="352dp"
+        android:layout_height="331dp"
+        android:layout_marginTop="48dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="320dp"
+            android:layout_height="80dp"
+            android:layout_margin="15dp"
+            android:hint="@string/signUp_username"
+            android:inputType="text"></EditText>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="320dp"
+            android:layout_height="80dp"
+            android:layout_margin="15dp"
+            android:hint="@string/signUp_email"
+            android:inputType="textEmailAddress"></EditText>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="320dp"
+            android:layout_height="80dp"
+            android:layout_margin="15dp"
+            android:hint="@string/signUp_password"
+            android:inputType="textPassword"></EditText>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_signUp"
+        android:layout_width="278dp"
+        android:layout_height="73dp"
+        android:layout_marginBottom="60dp"
+        android:text="Sign Up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
