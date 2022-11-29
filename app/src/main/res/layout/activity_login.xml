@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SignUpActivity">
+    tools:context=".activities.LoginActivity">
 
     <TextView
-        android:id="@+id/signUp_text"
+        android:id="@+id/login_text"
         android:layout_width="357dp"
         android:layout_height="38dp"
         android:layout_marginTop="72dp"
-        android:text="@string/text_SignUp"
+        android:text="@string/text_login"
         android:textAlignment="center"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,26 +21,18 @@
     <LinearLayout
         android:layout_width="352dp"
         android:layout_height="331dp"
-        android:layout_marginTop="48dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp_text">
-
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="320dp"
-            android:layout_height="80dp"
-            android:layout_margin="15dp"
-            android:hint="@string/signUp_username"
-            android:inputType="text"/>
+        app:layout_constraintTop_toBottomOf="@+id/login_text">
 
         <EditText
             android:id="@+id/email"
             android:layout_width="320dp"
             android:layout_height="80dp"
             android:layout_margin="15dp"
-            android:hint="@string/signUp_email"
+            android:hint="@string/login_email"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -48,8 +40,8 @@
             android:layout_width="320dp"
             android:layout_height="80dp"
             android:layout_margin="15dp"
-            android:hint="@string/signUp_password"
-            android:inputType="textPassword"/>
+            android:hint="@string/login_password"
+            android:inputType="textPassword" />
 
     </LinearLayout>
 
@@ -58,7 +50,7 @@
         android:layout_width="278dp"
         android:layout_height="73dp"
         android:layout_marginBottom="60dp"
-        android:text="@string/button_signUp"
+        android:text="@string/button_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -36,6 +36,12 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.btnSignUp.setOnClickListener(){
 
+            /**
+             * For the login method I used code from this website:
+             * Link: https://blog.mindorks.com/firebase-login-and-authentication-android-tutorial [section: Register a user with email and password]
+             * Last opened: 29.11.2022
+             */
+
             auth.createUserWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
                if(task.isSuccessful){
                    Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show()

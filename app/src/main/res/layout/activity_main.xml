@@ -8,10 +8,6 @@
     tools:context=".activities.HomeActivity">
 
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
-
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
