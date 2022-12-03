@@ -68,8 +68,9 @@ class HomeActivity : AppCompatActivity() {
             R.id.item_logout -> {
                 auth.signOut()
                 finish()
-                startActivity(Intent(this@HomeActivity, HomeActivity::class.java))
                 i("User has been logged out")
+                recreate()
+
             }
 
             R.id.item_profile -> {

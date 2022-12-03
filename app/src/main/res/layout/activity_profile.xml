@@ -67,8 +67,16 @@
             android:hint="@string/signUp_email"
             android:inputType="textEmailAddress" />
 
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:hint="@string/signUp_password"
+            android:inputType="textPassword" />
+
         <Button
-            android:id="@+id/changeImg"
+            android:id="@+id/btn_changeImg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -80,17 +88,7 @@
             android:textSize="16sp" />
 
 
-        <Button
-            android:id="@+id/changePassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@color/colorAccent"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="@string/button_changePassword"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+
 
     </LinearLayout>
 
