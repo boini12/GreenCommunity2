@@ -59,16 +59,14 @@ class ProfileActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        user?.let {
+        user.let {
             binding.username.setText(user.displayName)
             binding.email.setText(user.email)
 
         }
-        if (user != null) {
-            Picasso.get()
-                .load(user.photoUrl)
-                .into(binding.profileImg)
-        }
+        Picasso.get()
+            .load(user.photoUrl)
+            .into(binding.profileImg)
 
         userModel = UserModel(binding.username.text.toString(), binding.email.text.toString(), "", null)
 
@@ -97,7 +95,7 @@ class ProfileActivity : AppCompatActivity() {
                 displayName = binding.username.text.toString()
             }
 
-            user!!.updateProfile(profileUpdates)
+            user.updateProfile(profileUpdates)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful) {
                         Timber.i("User has been updated")
