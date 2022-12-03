@@ -1,10 +1,14 @@
 package org.wit.greencommunity.activities
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.google.firebase.auth.FirebaseAuth
@@ -12,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.squareup.picasso.Picasso
 import org.wit.greencommunity.R
+import org.wit.greencommunity.adapter.showImagePicker
 import org.wit.greencommunity.databinding.ActivityProfileBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.UserModel
@@ -31,6 +36,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     private lateinit var user : FirebaseUser
     private lateinit var userModel : UserModel
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var img : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +50,12 @@ class ProfileActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         user = auth.currentUser!!
 
+        img = if(user.photoUrl != null){
+            user.photoUrl!!
+        }else{
+            Uri.EMPTY
+
+        }
 
         app = application as MainApp
 
@@ -57,9 +70,6 @@ class ProfileActivity : AppCompatActivity() {
                 .into(binding.profileImg)
         }
 
-        var emailChanged = false
-        var usernameChanged = false
-
         userModel = UserModel(binding.username.text.toString(), binding.email.text.toString(), "", null)
 
         binding.username.addTextChangedListener(object : TextWatcher {
@@ -73,21 +83,27 @@ class ProfileActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable) {
                 userModel.username = binding.username.text.toString()
-                binding.btnChange.setOnClickListener{
-                    val profileUpdates = userProfileChangeRequest {
-                        displayName = binding.username.text.toString()
-                    }
-
-                    user!!.updateProfile(profileUpdates)
-                        .addOnCompleteListener { task ->
-                            if(task.isSuccessful) {
-                                Timber.i("Username has been updated")
-                            }
-                }
             }
 
-        }
         })
+
+        binding.btnChangeImg.setOnClickListener {
+            showImagePicker(imageIntentLauncher, this)
+        }
+        registerImagePickerCallback()
+        binding.btnChange.setOnClickListener{
+            val profileUpdates = userProfileChangeRequest {
+                photoUri = img
+                displayName = binding.username.text.toString()
+            }
+
+            user!!.updateProfile(profileUpdates)
+                .addOnCompleteListener { task ->
+                    if(task.isSuccessful) {
+                        Timber.i("User has been updated")
+                    }
+                }
+        }
 
     }
 
@@ -103,6 +119,32 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun registerImagePickerCallback(){
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+
+                            val image = result.data!!.data!!
+                            i("image: $image")
+                            img = image
+                            i("img: $img")
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            Picasso.get()
+                                .load(image)
+                                .into(binding.profileImg)
+                        }
+                        // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 
 
