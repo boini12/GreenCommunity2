@@ -59,7 +59,7 @@
             android:hint="@string/signUp_username"
             android:inputType="text" />
 
-        <EditText
+        <TextView
             android:id="@+id/email"
             android:layout_width="320dp"
             android:layout_height="60dp"
@@ -67,13 +67,7 @@
             android:hint="@string/signUp_email"
             android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="320dp"
-            android:layout_height="60dp"
-            android:layout_margin="15dp"
-            android:hint="@string/signUp_password"
-            android:inputType="textPassword" />
+
 
         <Button
             android:id="@+id/btn_changeImg"

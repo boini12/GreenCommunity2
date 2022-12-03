@@ -1,15 +1,17 @@
 package org.wit.greencommunity.activities
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
-import com.google.firebase.firestore.auth.User
 import com.squareup.picasso.Picasso
 import org.wit.greencommunity.R
-import org.wit.greencommunity.adapter.showImagePicker
 import org.wit.greencommunity.databinding.ActivityProfileBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.UserModel
@@ -27,6 +29,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     lateinit var app: MainApp
     private lateinit var auth : FirebaseAuth
+    private lateinit var user : FirebaseUser
     private lateinit var userModel : UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +41,7 @@ class ProfileActivity : AppCompatActivity() {
         Timber.i("ProfileActivity has started")
 
         auth = FirebaseAuth.getInstance()
-        val user = auth.currentUser
-
+        user = auth.currentUser!!
 
 
         app = application as MainApp
@@ -55,48 +57,37 @@ class ProfileActivity : AppCompatActivity() {
                 .into(binding.profileImg)
         }
 
+        var emailChanged = false
+        var usernameChanged = false
+
         userModel = UserModel(binding.username.text.toString(), binding.email.text.toString(), "", null)
 
-        binding.btnChange.setOnClickListener{
-            if (user != null) {
-                if(userModel.username != user.displayName && userModel.email != user.email){
-                    val profileUpdates = userProfileChangeRequest {
-                        displayName = userModel.username
-                    }
-                    user!!.updateProfile(profileUpdates)
+        binding.username.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-                    user!!.updateEmail(userModel.email)
-                        .addOnCompleteListener { task ->
-                            if(task.isSuccessful){
-                                i("User has been successfully updated")
-                            }
-                        }
-                }else if(userModel.email != user.email && userModel.username == user.displayName){
-                    user!!.updateEmail(userModel.email)
-                        .addOnCompleteListener { task ->
-                            if(task.isSuccessful){
-                                i("Email has been successfully updated")
-                            }
-                        }
-                }else if(userModel.username != user.displayName && userModel.email == user.email){
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                userModel.username = binding.username.text.toString()
+                binding.btnChange.setOnClickListener{
                     val profileUpdates = userProfileChangeRequest {
-                        displayName = userModel.username
+                        displayName = binding.username.text.toString()
                     }
+
                     user!!.updateProfile(profileUpdates)
-                        .addOnCompleteListener{ task ->
-                            if(task.isSuccessful){
-                                i("Username has been successfully updated")
+                        .addOnCompleteListener { task ->
+                            if(task.isSuccessful) {
+                                Timber.i("Username has been updated")
                             }
-                        }
-                }else{
-                    i("Nothing has changed")
                 }
             }
+
         }
-
-
-
-
+        })
 
     }
 
