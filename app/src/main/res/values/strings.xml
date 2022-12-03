@@ -20,6 +20,15 @@
     <string name="login_password">Password</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_logout">Logout</string>
+    <string name="button_addImage">Add Image</string>
+    <string name="select_profile_picture">Select profile image</string>
+    <string name="change_profile_picture">Change profile picture</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_home">Home</string>
+    <string name="text_profile">Profile</string>
+    <string name="button_changeProfile">Save Changes</string>
+    <string name="button_changeImg">Change Image</string>
+    <string name="button_changePassword">Change Password</string>
 
 
 </resources>

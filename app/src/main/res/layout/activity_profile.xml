@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SignUpActivity">
+    tools:context=".activities.ProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -23,11 +23,11 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:id="@+id/signUp_text"
+        android:id="@+id/text_profile"
         android:layout_width="357dp"
         android:layout_height="38dp"
         android:layout_marginTop="72dp"
-        android:text="@string/text_SignUp"
+        android:text="@string/text_profile"
         android:textAlignment="center"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,13 +36,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="324dp"
-        android:layout_height="439dp"
+        android:layout_width="353dp"
+        android:layout_height="460dp"
         android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp_text">
+        app:layout_constraintTop_toBottomOf="@+id/text_profile">
+
+        <ImageView
+            android:id="@+id/profileImg"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:srcCompat="@mipmap/ic_launcher" />
 
         <EditText
             android:id="@+id/username"
@@ -60,40 +67,39 @@
             android:hint="@string/signUp_email"
             android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="320dp"
-            android:layout_height="60dp"
-            android:layout_margin="15dp"
-            android:hint="@string/signUp_password"
-            android:inputType="textPassword" />
-
         <Button
-            android:id="@+id/addImage"
+            android:id="@+id/changeImg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@color/colorAccent"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="@string/button_addImage"
+            android:text="@string/button_changeImg"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/profileImg"
+
+        <Button
+            android:id="@+id/changePassword"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@color/colorAccent"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/button_changePassword"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_signUp"
+        android:id="@+id/btn_change"
         android:layout_width="278dp"
         android:layout_height="73dp"
         android:layout_marginBottom="60dp"
-        android:text="@string/button_signUp"
+        android:text="@string/button_changeProfile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

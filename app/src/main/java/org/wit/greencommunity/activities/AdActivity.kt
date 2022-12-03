@@ -13,7 +13,7 @@ import timber.log.Timber.i
 
 class AdActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivityAdBinding
+    private lateinit var binding: ActivityAdBinding
     lateinit var app: MainApp
     var ad = AdModel()
 

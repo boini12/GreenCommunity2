@@ -8,5 +8,11 @@
         android:title="@string/menu_logout"
         app:showAsAction="always"/>
 
+    <item
+        android:visible="false"
+        android:id="@+id/item_profile"
+        android:title="@string/menu_profile"
+        app:showAsAction="always"/>
+
 
 </menu>
