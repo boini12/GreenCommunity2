@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.wit.greencommunity.R
 import org.wit.greencommunity.adapter.showImagePicker
@@ -23,6 +26,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var img : Uri
+    private lateinit var database : DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +40,8 @@ class SignUpActivity : AppCompatActivity() {
         img = Uri.EMPTY
 
         app = application as MainApp
+
+        database = Firebase.database.reference
 
         i("SignUpActivity has started")
 
