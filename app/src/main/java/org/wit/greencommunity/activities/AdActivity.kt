@@ -1,9 +1,13 @@
 package org.wit.greencommunity.activities
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.CompoundButton
+import android.widget.EditText
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -16,8 +20,8 @@ import timber.log.Timber.i
 
 /**
  *  This is the AdActivity of the GreenCommunity App
- *  this activity is used to add a new activity in the users area and also add it to his/hers account
- *  [writeNewAd] the ad to the realtime database in Firebase
+ *  this activity is used to add a new activity to the app and also add it to a users account
+ *  [writeNewAd] pushes the new ad with its relevant information to the realtime database from firbase
  */
 
 class AdActivity : AppCompatActivity() {
@@ -51,15 +55,28 @@ class AdActivity : AppCompatActivity() {
             binding.adFree.text = ad.price.toString()
         }
 
-        binding.btnAdd.setOnClickListener(){
+        binding.btnAdd.setOnClickListener{
             ad.id = app.ads.getId()
             i("ID is: $ad.id")
             ad.title = binding.adTitle.text.toString()
             ad.description = binding.adDescription.text.toString()
-            ad.isFree = binding.adFree.isActivated
-            if(!ad.isFree){
-                binding.adPrice.isEnabled
+
+            binding.adFree.setOnCheckedChangeListener { _, isChecked ->
+                if(isChecked){
+                    Toast.makeText(this, isChecked.toString(), Toast.LENGTH_LONG).show()
+                }else{
+                    Toast.makeText(this, isChecked.toString(), Toast.LENGTH_LONG).show()
+                }
             }
+
+            ad.isFree = binding.adFree.isChecked
+            if(ad.isFree){
+                ad.price = 0.0
+            }else{
+                ad.price = binding.adPrice.text.toString().toDouble()
+            }
+
+
             if(ad.title.isNotEmpty()){
                 writeNewAd()
                 app.ads.create(ad.copy())
@@ -97,4 +114,5 @@ class AdActivity : AppCompatActivity() {
         database.child(newAd.id.toString()).push().setValue(newAd)
         database.child(newAd.id.toString()).child("user").setValue(auth.currentUser!!.uid)
     }
+
 }

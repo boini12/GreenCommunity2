@@ -19,16 +19,5 @@ data class AdModel( var id: Long = 0L,
                     var title:String="",
                     var description:String="",
                     var price:Double=0.00,
-                    var isFree:Boolean=false) : Parcelable {
+                    var isFree:Boolean=false) : Parcelable
 
-                        @Exclude
-                        fun toMap(): Map<String, Any?> {
-                            return mapOf(
-                                "id" to id,
-                                "title" to title,
-                                "description" to description,
-                                "price" to price,
-                                "isFree" to isFree
-                            )
-                        }
-                    }
