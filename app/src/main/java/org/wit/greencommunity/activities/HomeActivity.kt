@@ -7,7 +7,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.ToggleButton
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.core.view.get
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.auth.User
 import org.wit.greencommunity.R
@@ -24,16 +31,30 @@ import timber.log.Timber.i
  * If a user is logged in and wants to logout a button on the menu is available that will then call the signOut() method from Firebase
  * From here the user can also go to his profile
  */
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
     lateinit var app : MainApp
+    private lateinit var toolbar : Toolbar
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView : NavigationView
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbarAdd)
+        //setSupportActionBar(binding.toolbar)
+        toolbar = findViewById(R.id.toolbar)
+
+       binding.apply {
+           toggle = ActionBarDrawerToggle(this@HomeActivity, drawerLayout, 0 ,0)
+       }
+
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
+
 
         auth = FirebaseAuth.getInstance()
 
@@ -41,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
 
         i("GreenCommunity Application has been started")
 
-        binding.btnExplore.setOnClickListener(){
+        binding.homeActivity.btnExplore.setOnClickListener(){
             i("Explore Button pressed")
 
             intent = if(auth.currentUser != null){
@@ -79,5 +100,19 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.profile -> {
+                intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.ads -> {
+                TODO("needs to still be implemented")
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 }
