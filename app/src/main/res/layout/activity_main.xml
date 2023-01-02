@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
     <include
         android:id="@+id/homeActivity"
         layout="@layout/content_main"

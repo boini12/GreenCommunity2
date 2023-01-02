@@ -31,7 +31,7 @@ import timber.log.Timber.i
  * If a user is logged in and wants to logout a button on the menu is available that will then call the signOut() method from Firebase
  * From here the user can also go to his profile
  */
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
     lateinit var app : MainApp
@@ -44,16 +44,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //setSupportActionBar(binding.toolbar)
-        toolbar = findViewById(R.id.toolbar)
 
-       binding.apply {
-           toggle = ActionBarDrawerToggle(this@HomeActivity, drawerLayout, 0 ,0)
-       }
-
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-        navView.setNavigationItemSelectedListener(this)
 
 
         auth = FirebaseAuth.getInstance()
@@ -75,6 +66,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_home,menu)
         if(auth.currentUser != null && menu != null){
@@ -115,4 +107,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
+     */
 }
