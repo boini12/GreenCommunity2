@@ -29,6 +29,7 @@
     <string name="button_changeProfile">Save Changes</string>
     <string name="button_changeImg">Change Image</string>
     <string name="button_changePassword">Change Password</string>
-
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
 
 </resources>
