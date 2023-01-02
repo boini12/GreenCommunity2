@@ -2,7 +2,9 @@ package org.wit.greencommunity.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import org.wit.greencommunity.R
+import org.wit.greencommunity.adapter.adjustNavHeader
 import org.wit.greencommunity.databinding.ActivityMainBinding
 import org.wit.greencommunity.main.MainApp
 import timber.log.Timber.i
@@ -28,7 +31,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var binding: ActivityMainBinding
     lateinit var app : MainApp
     lateinit var drawerLayout: DrawerLayout
-    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     lateinit var navView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +54,20 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         auth = FirebaseAuth.getInstance()
 
+
+
+
+
         app = application as MainApp
 
         i("GreenCommunity Application has been started")
+
+        val navHeader = binding.navView.getHeaderView(0)
+
+        if(auth.currentUser != null){
+            adjustNavHeader(auth.currentUser!!, navHeader.findViewById(R.id.nav_userImg), navHeader.findViewById(R.id.nav_username))
+        }
+
 
 
         binding.homeActivity.btnExplore.setOnClickListener(){
@@ -101,6 +114,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
      */
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
@@ -125,7 +139,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.ads -> {
                 TODO("needs to still be implemented")
             }
-            R.id.signOut -> {
+            R.id.logout -> {
                 if(auth.currentUser != null){
                     item.isVisible = true
                     auth.signOut()
@@ -142,3 +156,4 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 }
+

@@ -3,7 +3,8 @@
 
     <item
         android:id="@+id/login"
-        android:title="Login" />
+        android:title="Login"
+        android:visible="false"/>
 
     <item
         android:id="@+id/profile"
@@ -15,7 +16,7 @@
         android:title="Your Ads" />
 
     <item
-        android:id="@+id/signOut"
+        android:id="@+id/logout"
         android:title="Logout" />
 
 
