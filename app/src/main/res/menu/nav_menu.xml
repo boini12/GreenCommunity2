@@ -2,16 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/login"
+        android:title="Login" />
+
+    <item
         android:id="@+id/profile"
         android:title="Profile"
         />
 
     <item
         android:id="@+id/ads"
-        android:title="Ads" />
+        android:title="Your Ads" />
 
     <item
         android:id="@+id/signOut"
         android:title="Logout" />
+
 
 </menu>

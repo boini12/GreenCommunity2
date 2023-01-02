@@ -3,6 +3,7 @@ package org.wit.greencommunity.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -102,12 +103,38 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+            R.id.login -> {
+                if(auth.currentUser == null){
+                    item.isVisible = true
+                    intent = Intent(this,LoginActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    item.isVisible = false
+                }
+            }
             R.id.profile -> {
-                intent = Intent(this, ProfileActivity::class.java)
-                startActivity(intent)
+                if(auth.currentUser != null){
+                    intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this, "You need to log in in order to see your profile", Toast.LENGTH_LONG).show()
+                    intent = Intent(this, LoginOrSignUpActivity::class.java)
+                    startActivity(intent)
+                }
             }
             R.id.ads -> {
                 TODO("needs to still be implemented")
+            }
+            R.id.signOut -> {
+                if(auth.currentUser != null){
+                    item.isVisible = true
+                    auth.signOut()
+                    Toast.makeText(this, "Successfully logged out", Toast.LENGTH_LONG).show()
+                    i("User has been logged out")
+                    recreate()
+                }else{
+                    item.isVisible = false
+                }
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
