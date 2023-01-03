@@ -50,25 +50,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.bringToFront()
         navView.setNavigationItemSelectedListener(this)
 
-
-
         auth = FirebaseAuth.getInstance()
-
-
-
-
 
         app = application as MainApp
 
         i("GreenCommunity Application has been started")
-
-        val navHeader = binding.navView.getHeaderView(0)
-
-        if(auth.currentUser != null){
-            adjustNavHeader(auth.currentUser!!, navHeader.findViewById(R.id.nav_userImg), navHeader.findViewById(R.id.nav_username))
-        }
-
-
 
         binding.homeActivity.btnExplore.setOnClickListener(){
             i("Explore Button pressed")

@@ -7,15 +7,22 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.squareup.picasso.Picasso
 import org.wit.greencommunity.R
+import org.wit.greencommunity.adapter.adjustNavHeader
 import org.wit.greencommunity.adapter.showImagePicker
 import org.wit.greencommunity.databinding.ActivityProfileBinding
 import org.wit.greencommunity.main.MainApp
@@ -29,7 +36,7 @@ import timber.log.Timber.i
  * A user has the chance to make changes to his/her profile and those changes are updated in Firebase
  */
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
     private lateinit var binding: ActivityProfileBinding
     lateinit var app: MainApp
@@ -38,17 +45,31 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var userModel : UserModel
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var img : Uri
+    private lateinit var drawerLayout : DrawerLayout
+    private lateinit var navView : NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbarAdd)
+        setSupportActionBar(binding.appToolbar.toolbar)
 
         Timber.i("ProfileActivity has started")
 
         auth = FirebaseAuth.getInstance()
         user = auth.currentUser!!
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, binding.appToolbar.toolbar, 0, 0
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.bringToFront()
+        navView.setNavigationItemSelectedListener(this)
+
 
         img = if(user.photoUrl != null){
             user.photoUrl!!
@@ -60,17 +81,17 @@ class ProfileActivity : AppCompatActivity() {
         app = application as MainApp
 
         user.let {
-            binding.username.setText(user.displayName)
-            binding.email.setText(user.email)
+            binding.profileActivity.username.setText(user.displayName)
+            binding.profileActivity.email.setText(user.email)
 
         }
         Picasso.get()
             .load(user.photoUrl)
-            .into(binding.profileImg)
+            .into(binding.profileActivity.profileImg)
 
-        userModel = UserModel(binding.username.text.toString(), binding.email.text.toString(), "", null)
+        userModel = UserModel(binding.profileActivity.username.text.toString(), binding.profileActivity.email.text.toString(), "", null)
 
-        binding.username.addTextChangedListener(object : TextWatcher {
+        binding.profileActivity.username.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -80,19 +101,22 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                userModel.username = binding.username.text.toString()
+                userModel.username = binding.profileActivity.username.text.toString()
             }
 
         })
 
-        binding.btnChangeImg.setOnClickListener {
+        binding.profileActivity.btnChangeImg.setOnClickListener {
             showImagePicker(imageIntentLauncher, this)
         }
         registerImagePickerCallback()
-        binding.btnChange.setOnClickListener{
+
+        binding.profileActivity.btnChange.setOnClickListener{
+
+
             val profileUpdates = userProfileChangeRequest {
                 photoUri = img
-                displayName = binding.username.text.toString()
+                displayName = binding.profileActivity.username.text.toString()
             }
 
             user.updateProfile(profileUpdates)
@@ -105,6 +129,7 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+    /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_profile,menu)
         return super.onCreateOptionsMenu(menu)
@@ -118,6 +143,10 @@ class ProfileActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+     */
+
+
 
     private fun registerImagePickerCallback(){
         imageIntentLauncher =
@@ -136,13 +165,49 @@ class ProfileActivity : AppCompatActivity() {
                                 Intent.FLAG_GRANT_READ_URI_PERMISSION)
                             Picasso.get()
                                 .load(image)
-                                .into(binding.profileImg)
+                                .into(binding.profileActivity.profileImg)
                         }
                         // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.home -> {
+                intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.login -> {
+                if(auth.currentUser == null){
+                    item.isVisible = true
+                    intent = Intent(this,LoginActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    item.isVisible = false
+                }
+            }
+
+            R.id.ads -> {
+                TODO("needs to still be implemented")
+            }
+            R.id.logout -> {
+                if(auth.currentUser != null){
+                    item.isVisible = true
+                    auth.signOut()
+                    Toast.makeText(this, "Successfully logged out", Toast.LENGTH_LONG).show()
+                    i("User has been logged out")
+                    recreate()
+                }else{
+                    item.isVisible = false
+                }
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 
 
