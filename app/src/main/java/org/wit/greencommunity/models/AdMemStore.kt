@@ -2,13 +2,9 @@ package org.wit.greencommunity.models
 
 import timber.log.Timber.i
 
-var lastId = 0L
-
-internal fun getId(): Long{
-    return lastId++
-}
-
 class AdMemStore: AdStore {
+    var lastId = 0L
+
 
     var ads = ArrayList<AdModel>()
 
@@ -17,7 +13,6 @@ class AdMemStore: AdStore {
     }
 
     override fun create(ad: AdModel) {
-        ad.id = getId()
         ads.add(ad)
         logAll()
     }
@@ -35,6 +30,10 @@ class AdMemStore: AdStore {
 
     fun logAll(){
         ads.forEach{ i("${it}")}
+    }
+
+    internal fun getId(): Long {
+        return lastId++
     }
 
 }

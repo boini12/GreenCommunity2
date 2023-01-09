@@ -75,6 +75,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if(auth.currentUser != null && menu != null){
             menu.getItem(0).isVisible = true
             menu.getItem(1).isVisible = true
+            menu.getItem(2).isVisible = true
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -91,6 +92,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.item_profile -> {
                 intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.item_add -> {
+                intent = Intent(this@HomeActivity, AdActivity::class.java)
                 startActivity(intent)
             }
         }

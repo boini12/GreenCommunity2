@@ -16,14 +16,5 @@ class MainApp : Application() {
         Timber.plant(Timber.DebugTree())
         i("GreenCommunity started")
 
-        ads.create(AdModel(1, "Fresh Tomatoes"))
-        ads.create(AdModel(2, "Green Peas"))
-        ads.create(AdModel(1, "Fresh Tomatoes"))
-        ads.create(AdModel(2, "Green Peas"))
-        ads.create(AdModel(1, "Fresh Tomatoes"))
-        ads.create(AdModel(2, "Green Peas"))
-        ads.create(AdModel(1, "Fresh Tomatoes"))
-        ads.create(AdModel(2, "Green Peas"))
-
     }
 }
