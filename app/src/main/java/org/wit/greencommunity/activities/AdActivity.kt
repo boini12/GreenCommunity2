@@ -89,20 +89,6 @@ class AdActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main,menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.item_cancel ->{
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     /**
      * For this method I used a changed version of a method shown in this link
      * Link: https://www.folkstalk.com/tech/how-to-prevent-overwriting-existing-data-in-firebase-with-solutions/
